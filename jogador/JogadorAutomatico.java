@@ -18,12 +18,15 @@ public class JogadorAutomatico implements Jogador
 
     public JogadorAutomatico (Tabuleiro tab, Marca mrc) throws Exception
     {
+        this.tabDoJogo = tab;
+        this.marca = mrc;
         // atribuir tab para tabDoJogo
         // e mrc para marca
     }
 
     public Marca getMarca ()
     {
+        return this.Marca;
         // retorna a marca do jogador
     }
 
