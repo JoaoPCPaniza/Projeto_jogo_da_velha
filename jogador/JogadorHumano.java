@@ -12,6 +12,12 @@ public class JogadorHumano implements Jogador
 
     public JogadorHumano (Tabuleiro tab) throws Exception
     {
+        if(tab==null) throw new Exception("Tabuleiro ausente!");
+        this.tabDoJogo = tab;
+        System.out.println("Digite qual marca você deseja? (X ou O)");
+        char letra = teclado.readLine().toUpperCase();
+        Marca mrc = new Marca(letra);
+        this.marca = mrc;
         // atribuir tab para tabDoJogo
         // pedir para o jogador escolher
         // sua marca e permitir digitacao
@@ -20,35 +26,35 @@ public class JogadorHumano implements Jogador
 
     public JogadorHumano (Tabuleiro tab, Marca mrc) throws Exception
     {
-        // atribuir tab para tabDoJogo
-        // e mrc para marca
+        if(tab==null || mrc==null) throw new Exception("Tabuleiro ou Marca ausentes!");
+        this.tabDoJogo = tab;
+        this.marca = mrc;
     }
 
     public Marca getMarca ()
     {
-        // retorna a marca do jogador
+        return this.marca;
     }
 
     public void facaSuaJogada ()
     {
-        // pergunta para o jogador onde ele quer
-        // jogar, permitindo digitacao e chamando
-        // os métodos apropriados de tabDoJogo
+        System.out.println("Onde deseja jogar ?");
+        System.out.println("Digite primeiro a linha, de 0 a 2, e depois a coluna, tudo por extenso, dessa forma: 'LinhaColuna'");
     }
 
     public void vcGanhou ()
     {
-        // mostra mensagem indicando vitoria
+        System.out.println("PARABÉNS MALIGNOZINHO, você venceu!");
     }
 
     public void vcPerdeu ()
     {
-        // mostra mensagem indicando derrota
+        System.out.println("VOCÊ ESTÁ DECADENTE, mas não desista, tente novamente!");
     }
 
     public void deuVelha ()
     {
-        // mostra mensagem indicando empate
+        System.out.println("VOCÊ JÁ FOI MELHOR EM, deu velha!");
     }
 
     public boolean querMaisUmaPartida ()

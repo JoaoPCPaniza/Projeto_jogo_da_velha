@@ -2,5 +2,6 @@ package jogador;
 
 public interface Jogador
 {
-    // faça
+    Marca getMarca();
+    void facaSuaJogada();
 }

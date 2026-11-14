@@ -6,18 +6,21 @@ public class JogadorAutomatico implements Jogador
     private Tabuleiro tabDoJogo = null;
 
     public JogadorAutomatico (Tabuleiro tab) throws Exception
-    {   tabDoJogo = tab;
+    {   
+        if(tab==null) throw new Exception("Tabuleiro ausente!");
+        this.tabDoJogo = tab;
         // atribuir tab para tabDoJogo
         // fazer o jogador escolher sua marca
         // via sorteio de numeros aleatorio
         if ((int)(Math.random()*2) == 0)
-            marca=new marca('X');
+            this.marca=new marca('X');
         else
-            marca=new marca('O');
+            this.marca=new marca('O');
     }
 
     public JogadorAutomatico (Tabuleiro tab, Marca mrc) throws Exception
     {
+        if(tab==null || mrc==null) throw new Exception("Tabuleiro ou Marca ausentes!");
         this.tabDoJogo = tab;
         this.marca = mrc;
         // atribuir tab para tabDoJogo
@@ -175,31 +178,80 @@ public class JogadorAutomatico implements Jogador
                 this.tabDoJogo.matriz[2][0]==null)
                 this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,0);
             else
-            // tentando jogada de futuro (há 1 marca do jogador e mais nada; vamos lá e plantamos outra marca) na linha 0
-            if ... else if ... else if ...
+            for ( byte i = (byte) 0 ; i<3 ; i++ ) {
+                if (this.tabDoJogo.matriz[i][0]==null &&
+                    this.tabDoJogo.matriz[i][1]!=null && this.tabDoJogo.matriz[i][1].equals(this.marca) &&
+                    this.tabDoJogo.matriz[i][2]==null)
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, i,0);
+                    return;
+                else
+                if (this.tabDoJogo.matriz[i][0]!=null &&
+                    this.tabDoJogo.matriz[i][1]==null &&
+                    this.tabDoJogo.matriz[i][2]==null && this.tabDoJogo.matriz[i][0].equals(this.marca))
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, i,1);
+                    return;
+                else
+                if (this.tabDoJogo.matriz[i][0]!=null && this.tabDoJogo.matriz[i][0].equals(this.marca) &&
+                    this.tabDoJogo.matriz[i][1]==null &&
+                    this.tabDoJogo.matriz[i][2]==null)
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, i,2);
+                    return;
+            }
+            for ( byte i = (byte) 0 ; i<3 ; i++ ) {
+                if (this.tabDoJogo.matriz[0][i]==null &&
+                    this.tabDoJogo.matriz[1][i]!=null && this.tabDoJogo.matriz[1][i].equals(this.marca) &&
+                    this.tabDoJogo.matriz[2][i]==null)
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,i);
+                    return;
+                else
+                if (this.tabDoJogo.matriz[0][i]==null &&
+                    this.tabDoJogo.matriz[1][i]==null &&
+                    this.tabDoJogo.matriz[2][i]!=null && this.tabDoJogo.matriz[2][i].equals(this.marca))
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,i);
+                    return;
+                else
+                if (this.tabDoJogo.matriz[0][i]!=null && this.tabDoJogo.matriz[0][i].equals(this.marca) &&
+                    this.tabDoJogo.matriz[1][i]==null &&
+                    this.tabDoJogo.matriz[2][i]==null)
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,i);
+                    return;
+            }
+            if (this.tabDoJogo.matriz[0][0]==null &&
+                this.tabDoJogo.matriz[1][1]!=null && this.tabDoJogo.matriz[1][1].equals(this.marca) &&
+                this.tabDoJogo.matriz[2][2]==null)
+                this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,0);
             else
-            // tentando jogada de futuro (há 1 marca do jogador e mais nada; vamos lá e plantamos outra marca) na linha 1
-            if ... else if ... else if ...
+            if (this.tabDoJogo.matriz[0][0]==null &&
+                this.tabDoJogo.matriz[1][1]==null &&
+                this.tabDoJogo.matriz[2][2]!=null && this.tabDoJogo.matriz[2][2].equals(this.marca))
+                this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
             else
-            // tentando jogada de futuro (há 1 marca do jogador e mais nada; vamos lá e plantamos outra marca) na linha 2
-            if ... else if ... else if ...
+            if (this.tabDoJogo.matriz[0][0]!=null && this.tabDoJogo.matriz[0][0].equals(this.marca) &&
+                this.tabDoJogo.matriz[1][1]==null &&
+                this.tabDoJogo.matriz[2][2]==null)
+                this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,2);
             else
-            // tentando jogada de futuro (há 1 marca do jogador e mais nada; vamos lá e plantamos outra marca) na coluna 0
-            if ... else if ... else if ...
+            // tentando ganhar na diagonal secundaria
+            if (this.tabDoJogo.matriz[0][2]==null &&
+                this.tabDoJogo.matriz[1][1]!=null && this.tabDoJogo.matriz[1][1].equals(this.marca) &&
+                this.tabDoJogo.matriz[2][0]==null)
+                this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,2);
             else
-            // tentando jogada de futuro (há 1 marca do jogador e mais nada; vamos lá e plantamos outra marca) na coluna 1
-            if ... else if ... else if ...
+            if (this.tabDoJogo.matriz[0][2]==null &&
+                this.tabDoJogo.matriz[1][1]==null &&
+                this.tabDoJogo.matriz[2][0]!=null && this.tabDoJogo.matriz[2][0].equals(this.marca))
+                this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
             else
-            // tentando jogada de futuro (há 1 marca do jogador e mais nada; vamos lá e plantamos outra marca) na coluna 2
-            if ... else if ... else if ...
+            if (this.tabDoJogo.matriz[0][2]!=null && this.tabDoJogo.matriz[0][2].equals(this.marca) &&
+                this.tabDoJogo.matriz[1][1]==null &&
+                this.tabDoJogo.matriz[2][0]==null)
+                this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,0);
             else
-            // tentando jogada de futuro (há 1 marca do jogador e mais nada; vamos lá e plantamos outra marca) na diagonal principal
-            if ... else if ... else if ...
-            else
-            // tentando jogada de futuro (há 1 marca do jogador e mais nada; vamos lá e plantamos outra marca) na diagonal secundaria
-            if ... else if ... else if ...
-            else
-            // termine jogando num lugar qualquer que esteja livre
+            for(byte i=0; i<3; i++){
+                for(byte p=0; p<0; p++){
+                    if(this.tabDoJogo.matriz[i][p]==null) this.tabDoJogo.setMarcaNaPosicao(this.marca, i,p);
+                }
+            }
         }
         catch (Exception erro)
         {} // ignorando pois sei que n o estou usando posicao invalida nem comparando com equals um null
