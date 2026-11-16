@@ -4,11 +4,37 @@ public class AnalistaSituacional
 
     public AnalistaSituacional (Tabuleiro tab) throws Exception
     {
-        // colocar tab em tabDoJogo
+        if(tab==null) throw new Exception("Tabuleiro ausente!");
+        this.tabDoJogo=tab;
     }
 
     public Marca getMarcaDoVencedor ()
     {
+        for ( byte i = (byte) 0 ; i<3 ; i++ ) {
+            if (this.tabDoJogo.matriz[i][0]==null &&
+                this.tabDoJogo.matriz[i][1]!=null && this.tabDoJogo.matriz[i][1].equals(this.marca) &&
+                this.tabDoJogo.matriz[i][2]!=null && this.tabDoJogo.matriz[i][2].equals(this.marca))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, i,0);
+                    return;
+                }
+            else
+            if (this.tabDoJogo.matriz[i][0]!=null && this.tabDoJogo.matriz[i][0].equals(this.marca) &&
+                this.tabDoJogo.matriz[i][1]==null &&
+                this.tabDoJogo.matriz[i][2]!=null && this.tabDoJogo.matriz[i][2].equals(this.marca))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, i,1);
+                    return;
+                }
+            else
+            if (this.tabDoJogo.matriz[i][0]!=null && this.tabDoJogo.matriz[i][0].equals(this.marca) &&
+                this.tabDoJogo.matriz[i][1]!=null && this.tabDoJogo.matriz[i][1].equals(this.marca) &&
+                this.tabDoJogo.matriz[i][2]==null)
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, i,2);
+                    return;
+                }
+        }
         // descobrir se ha um vencedor e retornar
         // a marca dele; retornara null, quando
         // nao houver vencedor
@@ -40,12 +66,23 @@ public class AnalistaSituacional
     @Override
     public boolean equals (Object obj)
     {
-        // retornar true se this for igual a obj ou false caso contrario
+        if(obj==null) return false;
+        if(obj==this) return  true;
+        if(obj.getClass()!=this.getClass()) return false;
+        AnalistaSituacional a = (AnalistaSituacional)obj;
+        return a.tabDoJogo==this.tabDoJogo;
     }
 
     @Override
     public int hashCode ()
     {
-        // faça
+        int retorno = 7;
+        for(int i=0; i<3; i++){
+            for(int p=0; p<3; p++){
+                retorno = retorno * 31 + this.matriz[i][p].hashCode();
+            }
+        }
+        if(retorno<0) retorno = -retorno;
+        return retorno;
     }
 }
