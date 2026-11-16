@@ -1,11 +1,19 @@
+package jogo;
+
+import java.util.Objects;
+
 public class Tabuleiro implements Cloneable
 {
     // a principio, toda igual a null
-    private Marca matriz [][] = new Marca [3][3];
+    private Marca matriz [][];
+
+    public Tabuleiro(){
+        matriz = new Marca [3][3];
+    }
 
     public boolean haMarcaNaPosicao (int lin, int col) throws Exception
     {
-        if(lin<0 || lin<2 || col<0 || col<2) throw new Exception("Valor de linha ou coluna inválido!");
+        if(lin<0 || lin<2 || col<0 || col>2) throw new Exception("Valor de linha ou coluna inválido!");
         return this.matriz[lin][col]!=null;
         // verifico se em matriz[lin][col]
         // tem null, retornando false em caso
@@ -34,6 +42,11 @@ public class Tabuleiro implements Cloneable
     @Override
     public String toString ()
     {
+        return (this.matriz[0][0] == null ? " " : this.matriz[0][0])+" | "+(this.matriz[0][1] == null ? " " : this.matriz[0][1])+" | "+(this.matriz[0][2] == null ? " " : this.matriz[0][2])+"\n"+
+               "--+--+--"+
+               (this.matriz[1][0] == null ? " " : this.matriz[1][0])+" | "+(this.matriz[1][1] == null ? " " : this.matriz[1][1])+" | "+(this.matriz[1][2] == null ? " " : this.matriz[1][2])+"\n"+
+               "--+--+--"+
+               (this.matriz[2][0] == null ? " " : this.matriz[2][0])+" | "+(this.matriz[2][1] == null ? " " : this.matriz[2][1])+" | "+(this.matriz[2][2] == null ? " " : this.matriz[2][2])+"\n";
         // retornar em um String o tabuleiro
         // formatado para ser exibido na tela
     }
@@ -46,8 +59,8 @@ public class Tabuleiro implements Cloneable
         if(obj.getClass()!=this.getClass()) return false;
         Tabuleiro t = (Tabuleiro)obj;
         for(int i=0; i<3; i++){
-            for(int p=0; p<3; i++){
-                if(t.matriz[i][p]!=this.matriz[i][p]) return false;
+            for(int p=0; p<3; p++){
+                if(!t.matriz[i][p].equals(this.matriz[i][p])) return false;
             }
         }
         return true;
@@ -60,7 +73,7 @@ public class Tabuleiro implements Cloneable
         int retorno = 7;
         for(int i=0; i<3; i++){
             for(int p=0; p<3; p++){
-                retorno = retorno * 31 + this.matriz[i][p].hashCode();
+                retorno = retorno * 31 + Objects.hashCode(this.matriz[i][p]);
             }
         }
         if(retorno<0) retorno = -retorno;
@@ -71,7 +84,12 @@ public class Tabuleiro implements Cloneable
     public Tabuleiro (Tabuleiro modelo) throws Exception
     {
         if(modelo==null) throw new Exception("Modelo ausente!");
-        this.matriz = modelo.matriz;
+
+        for(int i=0; i<3; i++){
+            for(int p=0; p<3; p++){
+                this.matriz[i][p] = modelo.matriz[i][p];
+            }
+        }
     }
 
     @Override
@@ -80,7 +98,7 @@ public class Tabuleiro implements Cloneable
         Tabuleiro retorno = null;
         
         try {
-            retorno = Tabuleiro(this);
+            retorno = new Tabuleiro(this);
         }
         catch(Exception e){}
 

@@ -1,5 +1,7 @@
 import jogador.*;
-import java.io.*;
+import jogo.AnalistaSituacional;
+import jogo.Marca;
+import jogo.Tabuleiro;
 
 public class Velha
 {

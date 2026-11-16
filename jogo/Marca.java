@@ -1,10 +1,11 @@
+package jogo;
 public class Marca
 {
     private char simbolo;
 
     public Marca (char smb) throws Exception
     {
-        if(smb=="X" || smb=="O") this.simbolo=smb;
+        if(smb=='X' || smb=='O') this.simbolo=smb;
         else throw new Exception("Valor de símbolo inválido!");
         // validar smb, garantindo que ele
         // seja 'X' ou 'O' e coloca-lo em

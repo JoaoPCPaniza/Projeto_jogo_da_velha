@@ -1,4 +1,6 @@
 package jogador;
+import jogo.Marca;
+import jogo.Tabuleiro;
 
 public class JogadorAutomatico implements Jogador
 {
@@ -13,9 +15,9 @@ public class JogadorAutomatico implements Jogador
         // fazer o jogador escolher sua marca
         // via sorteio de numeros aleatorio
         if ((int)(Math.random()*2) == 0)
-            this.marca=new marca('X');
+            this.marca=new Marca('X');
         else
-            this.marca=new marca('O');
+            this.marca=new Marca('O');
     }
 
     public JogadorAutomatico (Tabuleiro tab, Marca mrc) throws Exception
@@ -29,7 +31,7 @@ public class JogadorAutomatico implements Jogador
 
     public Marca getMarca ()
     {
-        return this.Marca;
+        return this.marca;
         // retorna a marca do jogador
     }
 
@@ -38,253 +40,307 @@ public class JogadorAutomatico implements Jogador
         try
         {
             for ( byte i = (byte) 0 ; i<3 ; i++ ) {
-                if (this.tabDoJogo.matriz[i][0]==null &&
-                    this.tabDoJogo.matriz[i][1]!=null && this.tabDoJogo.matriz[i][1].equals(this.marca) &&
-                    this.tabDoJogo.matriz[i][2]!=null && this.tabDoJogo.matriz[i][2].equals(this.marca))
+                if (!this.tabDoJogo.haMarcaNaPosicao(i,0) &&
+                    this.tabDoJogo.haMarcaNaPosicao(i,1) && this.tabDoJogo.getMarcaNaPosicao(i,1).equals(this.marca) &&
+                    this.tabDoJogo.haMarcaNaPosicao(i,2) && this.tabDoJogo.getMarcaNaPosicao(i,2).equals(this.marca))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, i,0);
                         return;
                     }
                 else
-                if (this.tabDoJogo.matriz[i][0]!=null && this.tabDoJogo.matriz[i][0].equals(this.marca) &&
-                    this.tabDoJogo.matriz[i][1]==null &&
-                    this.tabDoJogo.matriz[i][2]!=null && this.tabDoJogo.matriz[i][2].equals(this.marca))
+                if (this.tabDoJogo.haMarcaNaPosicao(i,0) && this.tabDoJogo.getMarcaNaPosicao(i,0).equals(this.marca) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(i,1) &&
+                    this.tabDoJogo.haMarcaNaPosicao(i,2) && this.tabDoJogo.getMarcaNaPosicao(i,2).equals(this.marca))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, i,1);
                         return;
                     }
                 else
-                if (this.tabDoJogo.matriz[i][0]!=null && this.tabDoJogo.matriz[i][0].equals(this.marca) &&
-                    this.tabDoJogo.matriz[i][1]!=null && this.tabDoJogo.matriz[i][1].equals(this.marca) &&
-                    this.tabDoJogo.matriz[i][2]==null)
+                if (this.tabDoJogo.haMarcaNaPosicao(i,0) && this.tabDoJogo.getMarcaNaPosicao(i,0).equals(this.marca) &&
+                    this.tabDoJogo.haMarcaNaPosicao(i,1) && this.tabDoJogo.getMarcaNaPosicao(i,1).equals(this.marca) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(i,2))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, i,2);
                         return;
                     }
             }
             for ( byte i = (byte) 0 ; i<3 ; i++ ) {
-                if (this.tabDoJogo.matriz[0][i]==null &&
-                    this.tabDoJogo.matriz[1][i]!=null && this.tabDoJogo.matriz[1][i].equals(this.marca) &&
-                    this.tabDoJogo.matriz[2][i]!=null && this.tabDoJogo.matriz[2][i].equals(this.marca))
+                if (!this.tabDoJogo.haMarcaNaPosicao(0,i) &&
+                    this.tabDoJogo.haMarcaNaPosicao(1,i) && this.tabDoJogo.getMarcaNaPosicao(1,i).equals(this.marca) &&
+                    this.tabDoJogo.haMarcaNaPosicao(2,i) && this.tabDoJogo.getMarcaNaPosicao(2,i).equals(this.marca))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,i);
                         return;
                     }
                 else
-                if (this.tabDoJogo.matriz[0][i]!=null && this.tabDoJogo.matriz[0][i].equals(this.marca) &&
-                    this.tabDoJogo.matriz[1][i]==null &&
-                    this.tabDoJogo.matriz[2][i]!=null && this.tabDoJogo.matriz[2][i].equals(this.marca))
+                if (this.tabDoJogo.haMarcaNaPosicao(0,i) && this.tabDoJogo.getMarcaNaPosicao(0,i).equals(this.marca) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(1,i) &&
+                    this.tabDoJogo.haMarcaNaPosicao(2,i) && this.tabDoJogo.getMarcaNaPosicao(2,i).equals(this.marca))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,i);
                         return;
                     }
                 else
-                if (this.tabDoJogo.matriz[0][i]!=null && this.tabDoJogo.matriz[0][i].equals(this.marca) &&
-                    this.tabDoJogo.matriz[1][i]!=null && this.tabDoJogo.matriz[1][i].equals(this.marca) &&
-                    this.tabDoJogo.matriz[2][i]==null)
+                if (this.tabDoJogo.haMarcaNaPosicao(0,i) && this.tabDoJogo.getMarcaNaPosicao(0,i).equals(this.marca) &&
+                    this.tabDoJogo.haMarcaNaPosicao(1,i) && this.tabDoJogo.getMarcaNaPosicao(1,i).equals(this.marca) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(2,i))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,i);
                         return;
                     }
             }
             // tentando ganhar na diagonal principal
-            if (this.tabDoJogo.matriz[0][0]==null &&
-                this.tabDoJogo.matriz[1][1]!=null && this.tabDoJogo.matriz[1][1].equals(this.marca) &&
-                this.tabDoJogo.matriz[2][2]!=null && this.tabDoJogo.matriz[2][2].equals(this.marca))
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,0);
+            if (!this.tabDoJogo.haMarcaNaPosicao(0,0) &&
+                this.tabDoJogo.haMarcaNaPosicao(1,1) && this.tabDoJogo.getMarcaNaPosicao(1,1).equals(this.marca) &&
+                this.tabDoJogo.haMarcaNaPosicao(2,2) && this.tabDoJogo.getMarcaNaPosicao(2,2).equals(this.marca))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,0);
+                    return;
+                }
             else
-            if (this.tabDoJogo.matriz[0][0]!=null && this.tabDoJogo.matriz[0][0].equals(this.marca) &&
-                this.tabDoJogo.matriz[1][1]==null &&
-                this.tabDoJogo.matriz[2][2]!=null && this.tabDoJogo.matriz[2][2].equals(this.marca))
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
+            if (this.tabDoJogo.haMarcaNaPosicao(0,0) && this.tabDoJogo.getMarcaNaPosicao(0,0).equals(this.marca) &&
+                !this.tabDoJogo.haMarcaNaPosicao(1,1) &&
+                this.tabDoJogo.haMarcaNaPosicao(2,2) && this.tabDoJogo.getMarcaNaPosicao(2,2).equals(this.marca))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
+                    return;
+                }
             else
-            if (this.tabDoJogo.matriz[0][0]!=null && this.tabDoJogo.matriz[0][0].equals(this.marca) &&
-                this.tabDoJogo.matriz[1][1]!=null && this.tabDoJogo.matriz[1][1].equals(this.marca) &&
-                this.tabDoJogo.matriz[2][2]==null)
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,2);
+            if (this.tabDoJogo.haMarcaNaPosicao(0,0) && this.tabDoJogo.getMarcaNaPosicao(0,0).equals(this.marca) &&
+                this.tabDoJogo.haMarcaNaPosicao(1,1) && this.tabDoJogo.getMarcaNaPosicao(1,1).equals(this.marca) &&
+                !this.tabDoJogo.haMarcaNaPosicao(2,2))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,2);
+                    return;
+                }
             else
             // tentando ganhar na diagonal secundaria
-            if (this.tabDoJogo.matriz[0][2]==null &&
-                this.tabDoJogo.matriz[1][1]!=null && this.tabDoJogo.matriz[1][1].equals(this.marca) &&
-                this.tabDoJogo.matriz[2][0]!=null && this.tabDoJogo.matriz[2][0].equals(this.marca))
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,2);
+            if (!this.tabDoJogo.haMarcaNaPosicao(0,2) &&
+                this.tabDoJogo.haMarcaNaPosicao(1,1) && this.tabDoJogo.getMarcaNaPosicao(1,1).equals(this.marca) &&
+                this.tabDoJogo.haMarcaNaPosicao(2,0) && this.tabDoJogo.getMarcaNaPosicao(2,0).equals(this.marca))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,2);
+                    return;
+                }
             else
-            if (this.tabDoJogo.matriz[0][2]!=null && this.tabDoJogo.matriz[0][2].equals(this.marca) &&
-                this.tabDoJogo.matriz[1][1]==null &&
-                this.tabDoJogo.matriz[2][0]!=null && this.tabDoJogo.matriz[2][0].equals(this.marca))
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
+            if (this.tabDoJogo.haMarcaNaPosicao(0,2) && this.tabDoJogo.getMarcaNaPosicao(0,2).equals(this.marca) &&
+                !this.tabDoJogo.haMarcaNaPosicao(1,1) &&
+                this.tabDoJogo.haMarcaNaPosicao(2,0) && this.tabDoJogo.getMarcaNaPosicao(2,0).equals(this.marca))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
+                    return;
+                }
             else
-            if (this.tabDoJogo.matriz[0][2]!=null && this.tabDoJogo.matriz[0][2].equals(this.marca) &&
-                this.tabDoJogo.matriz[1][1]!=null && this.tabDoJogo.matriz[1][1].equals(this.marca) &&
-                this.tabDoJogo.matriz[2][0]==null)
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,0);
+            if (this.tabDoJogo.haMarcaNaPosicao(0,2) && this.tabDoJogo.getMarcaNaPosicao(0,2).equals(this.marca) &&
+                this.tabDoJogo.haMarcaNaPosicao(1,1) && this.tabDoJogo.getMarcaNaPosicao(1,1).equals(this.marca) &&
+                !this.tabDoJogo.haMarcaNaPosicao(2,0))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,0);
+                    return;
+                }
             else
             for ( byte i = (byte) 0 ; i<3 ; i++ ) {
-                if (this.tabDoJogo.matriz[i][0]==null &&
-                    this.tabDoJogo.matriz[i][1]!=null && !this.tabDoJogo.matriz[i][1].equals(this.marca) &&
-                    this.tabDoJogo.matriz[i][2]!=null && !this.tabDoJogo.matriz[i][2].equals(this.marca))
+                if (!this.tabDoJogo.haMarcaNaPosicao(i,0) &&
+                    this.tabDoJogo.haMarcaNaPosicao(i,1) && !this.tabDoJogo.getMarcaNaPosicao(i,1).equals(this.marca) &&
+                    this.tabDoJogo.haMarcaNaPosicao(i,2) && !this.tabDoJogo.getMarcaNaPosicao(i,2).equals(this.marca))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, i,0);
                         return;
                     }
                 else
-                if (this.tabDoJogo.matriz[i][0]!=null && !this.tabDoJogo.matriz[i][0].equals(this.marca) &&
-                    this.tabDoJogo.matriz[i][1]==null &&
-                    this.tabDoJogo.matriz[i][2]!=null && !this.tabDoJogo.matriz[i][2].equals(this.marca))
+                if (this.tabDoJogo.haMarcaNaPosicao(i,0) && !this.tabDoJogo.getMarcaNaPosicao(i,0).equals(this.marca) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(i,1) &&
+                    this.tabDoJogo.haMarcaNaPosicao(i,2) && !this.tabDoJogo.getMarcaNaPosicao(i,2).equals(this.marca))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, i,1);
                         return;
                     }
                 else
-                if (this.tabDoJogo.matriz[i][0]!=null && !this.tabDoJogo.matriz[i][0].equals(this.marca) &&
-                    this.tabDoJogo.matriz[i][1]!=null && !this.tabDoJogo.matriz[i][1].equals(this.marca) &&
-                    this.tabDoJogo.matriz[i][2]==null)
+                if (this.tabDoJogo.haMarcaNaPosicao(i,0) && !this.tabDoJogo.getMarcaNaPosicao(i,0).equals(this.marca) &&
+                    this.tabDoJogo.haMarcaNaPosicao(i,1) && !this.tabDoJogo.getMarcaNaPosicao(i,1).equals(this.marca) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(i,2))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, i,2);
                         return;
                     }
             }
             for ( byte i = (byte) 0 ; i<3 ; i++ ) {
-                if (this.tabDoJogo.matriz[0][i]==null &&
-                    this.tabDoJogo.matriz[1][i]!=null && !this.tabDoJogo.matriz[1][i].equals(this.marca) &&
-                    this.tabDoJogo.matriz[2][i]!=null && !this.tabDoJogo.matriz[2][i].equals(this.marca))
+                if (!this.tabDoJogo.haMarcaNaPosicao(0,i) &&
+                    this.tabDoJogo.haMarcaNaPosicao(1,i) && !this.tabDoJogo.getMarcaNaPosicao(1,i).equals(this.marca) &&
+                    this.tabDoJogo.haMarcaNaPosicao(2,i) && !this.tabDoJogo.getMarcaNaPosicao(2,i).equals(this.marca))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,i);
                         return;
                     }
                 else
-                if (this.tabDoJogo.matriz[0][i]!=null && !this.tabDoJogo.matriz[0][i].equals(this.marca) &&
-                    this.tabDoJogo.matriz[1][i]==null &&
-                    this.tabDoJogo.matriz[2][i]!=null && !this.tabDoJogo.matriz[2][i].equals(this.marca))
+                if (this.tabDoJogo.haMarcaNaPosicao(0,i) && !this.tabDoJogo.getMarcaNaPosicao(0,i).equals(this.marca) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(1,i) &&
+                    this.tabDoJogo.haMarcaNaPosicao(2,i) && !this.tabDoJogo.getMarcaNaPosicao(2,i).equals(this.marca))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,i);
                         return;
                     }
                 else
-                if (this.tabDoJogo.matriz[0][i]!=null && !this.tabDoJogo.matriz[0][i].equals(this.marca) &&
-                    this.tabDoJogo.matriz[1][i]!=null && !this.tabDoJogo.matriz[1][i].equals(this.marca) &&
-                    this.tabDoJogo.matriz[2][i]==null)
+                if (this.tabDoJogo.haMarcaNaPosicao(0,i) && !this.tabDoJogo.getMarcaNaPosicao(0,i).equals(this.marca) &&
+                    this.tabDoJogo.haMarcaNaPosicao(1,i) && !this.tabDoJogo.getMarcaNaPosicao(1,i).equals(this.marca) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(2,i))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,i);
                         return;
                     }
             }
             // tentando atrapalhar vitoria na diagonal principal
-            if (this.tabDoJogo.matriz[0][0]==null &&
-                this.tabDoJogo.matriz[1][1]!=null && !this.tabDoJogo.matriz[1][1].equals(this.marca) &&
-                this.tabDoJogo.matriz[2][2]!=null && !this.tabDoJogo.matriz[2][2].equals(this.marca))
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,0);
+            if (!this.tabDoJogo.haMarcaNaPosicao(0,0) &&
+                this.tabDoJogo.haMarcaNaPosicao(1,1) && !this.tabDoJogo.getMarcaNaPosicao(1,1).equals(this.marca) &&
+                this.tabDoJogo.haMarcaNaPosicao(2,2) && !this.tabDoJogo.getMarcaNaPosicao(2,2).equals(this.marca))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,0);
+                    return;
+                }
             else
-            if (this.tabDoJogo.matriz[0][0]!=null && !this.tabDoJogo.matriz[0][0].equals(this.marca) &&
-                this.tabDoJogo.matriz[1][1]==null &&
-                this.tabDoJogo.matriz[2][2]!=null && !this.tabDoJogo.matriz[2][2].equals(this.marca))
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
+            if (this.tabDoJogo.haMarcaNaPosicao(0,0) && !this.tabDoJogo.getMarcaNaPosicao(0,0).equals(this.marca) &&
+                !this.tabDoJogo.haMarcaNaPosicao(1,1) &&
+                this.tabDoJogo.haMarcaNaPosicao(2,2) && !this.tabDoJogo.getMarcaNaPosicao(2,2).equals(this.marca))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
+                    return;
+                }
             else
-            if (this.tabDoJogo.matriz[0][0]!=null && !this.tabDoJogo.matriz[0][0].equals(this.marca) &&
-                this.tabDoJogo.matriz[1][1]!=null && !this.tabDoJogo.matriz[1][1].equals(this.marca) &&
-                this.tabDoJogo.matriz[2][2]==null)
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,2);
+            if (this.tabDoJogo.haMarcaNaPosicao(0,0) && !this.tabDoJogo.getMarcaNaPosicao(0,0).equals(this.marca) &&
+                this.tabDoJogo.haMarcaNaPosicao(1,1) && !this.tabDoJogo.getMarcaNaPosicao(1,1).equals(this.marca) &&
+                !this.tabDoJogo.haMarcaNaPosicao(2,2))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,2);
+                    return;
+                }
             else
             // tentando atrapalhar vitoria na diagonal secundaria
-            if (this.tabDoJogo.matriz[0][2]==null &&
-                this.tabDoJogo.matriz[1][1]!=null && !this.tabDoJogo.matriz[1][1].equals(this.marca) &&
-                this.tabDoJogo.matriz[2][0]!=null && !this.tabDoJogo.matriz[2][0].equals(this.marca))
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,2);
+            if (!this.tabDoJogo.haMarcaNaPosicao(0,2) &&
+                this.tabDoJogo.haMarcaNaPosicao(1,1) && !this.tabDoJogo.getMarcaNaPosicao(1,1).equals(this.marca) &&
+                this.tabDoJogo.haMarcaNaPosicao(2,0) && !this.tabDoJogo.getMarcaNaPosicao(2,0).equals(this.marca))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,2);
+                    return;
+                }
             else
-            if (this.tabDoJogo.matriz[0][2]!=null && !this.tabDoJogo.matriz[0][2].equals(this.marca) &&
-                this.tabDoJogo.matriz[1][1]==null &&
-                this.tabDoJogo.matriz[2][0]!=null && !this.tabDoJogo.matriz[2][0].equals(this.marca))
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
+            if (this.tabDoJogo.haMarcaNaPosicao(0,2) && !this.tabDoJogo.getMarcaNaPosicao(0,2).equals(this.marca) &&
+                !this.tabDoJogo.haMarcaNaPosicao(1,1) &&
+                this.tabDoJogo.haMarcaNaPosicao(2,0) && !this.tabDoJogo.getMarcaNaPosicao(2,0).equals(this.marca))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
+                    return;
+                }
             else
-            if (this.tabDoJogo.matriz[0][2]!=null && !this.tabDoJogo.matriz[0][2].equals(this.marca) &&
-                this.tabDoJogo.matriz[1][1]!=null && !this.tabDoJogo.matriz[1][1].equals(this.marca) &&
-                this.tabDoJogo.matriz[2][0]==null)
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,0);
+            if (this.tabDoJogo.haMarcaNaPosicao(0,2) && !this.tabDoJogo.getMarcaNaPosicao(0,2).equals(this.marca) &&
+                this.tabDoJogo.haMarcaNaPosicao(1,1) && !this.tabDoJogo.getMarcaNaPosicao(1,1).equals(this.marca) &&
+                !this.tabDoJogo.haMarcaNaPosicao(2,0))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,0);
+                    return;
+                }
             else
             for ( byte i = (byte) 0 ; i<3 ; i++ ) {
-                if (this.tabDoJogo.matriz[i][0]==null &&
-                    this.tabDoJogo.matriz[i][1]!=null && this.tabDoJogo.matriz[i][1].equals(this.marca) &&
-                    this.tabDoJogo.matriz[i][2]==null)
+                if (!this.tabDoJogo.haMarcaNaPosicao(i,0) &&
+                    this.tabDoJogo.haMarcaNaPosicao(i,1) && this.tabDoJogo.getMarcaNaPosicao(i,1).equals(this.marca) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(i,2))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, i,0);
                         return;
                     }
                 else
-                if (this.tabDoJogo.matriz[i][0]!=null &&
-                    this.tabDoJogo.matriz[i][1]==null &&
-                    this.tabDoJogo.matriz[i][2]==null && this.tabDoJogo.matriz[i][0].equals(this.marca))
+                if (!this.tabDoJogo.haMarcaNaPosicao(i,0) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(i,1) &&
+                    this.tabDoJogo.haMarcaNaPosicao(i,2) && this.tabDoJogo.getMarcaNaPosicao(i,2).equals(this.marca))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, i,1);
                         return;
                     }
                 else
-                if (this.tabDoJogo.matriz[i][0]!=null && this.tabDoJogo.matriz[i][0].equals(this.marca) &&
-                    this.tabDoJogo.matriz[i][1]==null &&
-                    this.tabDoJogo.matriz[i][2]==null)
+                if (this.tabDoJogo.haMarcaNaPosicao(i,0) && this.tabDoJogo.getMarcaNaPosicao(i,0).equals(this.marca) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(i,1) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(i,2))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, i,2);
                         return;
                     }
             }
             for ( byte i = (byte) 0 ; i<3 ; i++ ) {
-                if (this.tabDoJogo.matriz[0][i]==null &&
-                    this.tabDoJogo.matriz[1][i]!=null && this.tabDoJogo.matriz[1][i].equals(this.marca) &&
-                    this.tabDoJogo.matriz[2][i]==null)
+                if (!this.tabDoJogo.haMarcaNaPosicao(0,i) &&
+                    this.tabDoJogo.haMarcaNaPosicao(1,i) && this.tabDoJogo.getMarcaNaPosicao(1,i).equals(this.marca) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(2,i))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,i);
                         return;
                     }
                 else
-                if (this.tabDoJogo.matriz[0][i]==null &&
-                    this.tabDoJogo.matriz[1][i]==null &&
-                    this.tabDoJogo.matriz[2][i]!=null && this.tabDoJogo.matriz[2][i].equals(this.marca))
+                if (!this.tabDoJogo.haMarcaNaPosicao(0,i) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(1,i) &&
+                    this.tabDoJogo.haMarcaNaPosicao(2,i) && this.tabDoJogo.getMarcaNaPosicao(2,i).equals(this.marca))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,i);
                         return;
                     }
                 else
-                if (this.tabDoJogo.matriz[0][i]!=null && this.tabDoJogo.matriz[0][i].equals(this.marca) &&
-                    this.tabDoJogo.matriz[1][i]==null &&
-                    this.tabDoJogo.matriz[2][i]==null)
+                if (this.tabDoJogo.haMarcaNaPosicao(0,i) && this.tabDoJogo.getMarcaNaPosicao(0,i).equals(this.marca) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(1,i) &&
+                    !this.tabDoJogo.haMarcaNaPosicao(2,i))
                     {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,i);
                         return;
                     }
             }
-            if (this.tabDoJogo.matriz[0][0]==null &&
-                this.tabDoJogo.matriz[1][1]!=null && this.tabDoJogo.matriz[1][1].equals(this.marca) &&
-                this.tabDoJogo.matriz[2][2]==null)
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,0);
+            if (!this.tabDoJogo.haMarcaNaPosicao(0,0) &&
+                this.tabDoJogo.haMarcaNaPosicao(1,1) && this.tabDoJogo.getMarcaNaPosicao(1,1).equals(this.marca) &&
+                !this.tabDoJogo.haMarcaNaPosicao(2,2))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,0);
+                    return;
+                }
             else
-            if (this.tabDoJogo.matriz[0][0]==null &&
-                this.tabDoJogo.matriz[1][1]==null &&
-                this.tabDoJogo.matriz[2][2]!=null && this.tabDoJogo.matriz[2][2].equals(this.marca))
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
+            if (!this.tabDoJogo.haMarcaNaPosicao(0,0) &&
+                !this.tabDoJogo.haMarcaNaPosicao(1,1) &&
+                this.tabDoJogo.haMarcaNaPosicao(2,2) && this.tabDoJogo.getMarcaNaPosicao(2,2).equals(this.marca))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
+                    return;
+                }
             else
-            if (this.tabDoJogo.matriz[0][0]!=null && this.tabDoJogo.matriz[0][0].equals(this.marca) &&
-                this.tabDoJogo.matriz[1][1]==null &&
-                this.tabDoJogo.matriz[2][2]==null)
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,2);
+            if (this.tabDoJogo.haMarcaNaPosicao(0,0) && this.tabDoJogo.getMarcaNaPosicao(0,0).equals(this.marca) &&
+                !this.tabDoJogo.haMarcaNaPosicao(1,1) &&
+                !this.tabDoJogo.haMarcaNaPosicao(2,2))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,2);
+                    return;
+                }
             else
             // tentando ganhar na diagonal secundaria
-            if (this.tabDoJogo.matriz[0][2]==null &&
-                this.tabDoJogo.matriz[1][1]!=null && this.tabDoJogo.matriz[1][1].equals(this.marca) &&
-                this.tabDoJogo.matriz[2][0]==null)
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,2);
+            if (!this.tabDoJogo.haMarcaNaPosicao(0,2) &&
+                this.tabDoJogo.haMarcaNaPosicao(1,1) && this.tabDoJogo.getMarcaNaPosicao(1,1).equals(this.marca) &&
+                !this.tabDoJogo.haMarcaNaPosicao(2,0))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 0,2);
+                    return;
+                }
             else
-            if (this.tabDoJogo.matriz[0][2]==null &&
-                this.tabDoJogo.matriz[1][1]==null &&
-                this.tabDoJogo.matriz[2][0]!=null && this.tabDoJogo.matriz[2][0].equals(this.marca))
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
+            if (!this.tabDoJogo.haMarcaNaPosicao(0,2) &&
+                !this.tabDoJogo.haMarcaNaPosicao(1,1) &&
+                this.tabDoJogo.haMarcaNaPosicao(2,0) && this.tabDoJogo.getMarcaNaPosicao(2,0).equals(this.marca))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
+                    return;
+                }
             else
-            if (this.tabDoJogo.matriz[0][2]!=null && this.tabDoJogo.matriz[0][2].equals(this.marca) &&
-                this.tabDoJogo.matriz[1][1]==null &&
-                this.tabDoJogo.matriz[2][0]==null)
-                this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,0);
+            if (this.tabDoJogo.haMarcaNaPosicao(0,2) && this.tabDoJogo.getMarcaNaPosicao(0,2).equals(this.marca) &&
+                !this.tabDoJogo.haMarcaNaPosicao(1,1) &&
+                !this.tabDoJogo.haMarcaNaPosicao(2,0))
+                {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 2,0);
+                    return;
+                }
             else
             for(byte i=0; i<3; i++){
-                for(byte p=0; p<0; p++){
-                    if(this.tabDoJogo.matriz[i][p]==null) {
+                for(byte p=0; p<3; p++){
+                    if(!this.tabDoJogo.haMarcaNaPosicao(i,p)) {
                         this.tabDoJogo.setMarcaNaPosicao(this.marca, i,p);
                         return;
                     };
