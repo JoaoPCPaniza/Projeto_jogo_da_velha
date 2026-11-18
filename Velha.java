@@ -43,30 +43,40 @@ public class Velha
                 }
 
                 analista = new AnalistaSituacional (tabDoJogo);
+                System.out.println(tabDoJogo);
 
                 do
                 {
                     jogadorDaVez.facaSuaJogada();
 
-                    if (jogadorDaVez==jogadorH)
+                    if (jogadorDaVez==jogadorH){
                         jogadorDaVez=jogadorA;
-                    else
+                        System.out.println("\n Jogada do player:");
+                    }
+                    else{
                         jogadorDaVez=jogadorH;
+                        System.out.println("Jogada da maquina:");
+                    }
+
+                    System.out.println(tabDoJogo);
                 }
                 while (!analista.fimDeJogo());
 
-                if (analista.getMarcaDoVencedor().equals(jogadorH.getMarca()))
-                    jogadorH.vcGanhou ();
+                if (analista.getMarcaDoVencedor()==null)
+                    jogadorH.deuVelha ();
+
                 else
-                    if (analista.getMarcaDoVencedor().equals(jogadorA.getMarca()))
-                        jogadorH.vcPerdeu ();
+                    if (analista.getMarcaDoVencedor().equals(jogadorH.getMarca()))
+                        jogadorH.vcGanhou ();
                     else
-                        jogadorH.deuVelha ();
+                        jogadorH.vcPerdeu ();
 
                 jogadorHumanoComeca = !jogadorHumanoComeca;
             }
             catch (Exception e)
-            {}
+            {
+                e.printStackTrace();
+            }
         }
         while (jogadorH.querMaisUmaPartida());
     }

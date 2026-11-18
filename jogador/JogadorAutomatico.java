@@ -244,7 +244,7 @@ public class JogadorAutomatico implements Jogador
                     this.tabDoJogo.haMarcaNaPosicao(i,1) && this.tabDoJogo.getMarcaNaPosicao(i,1).equals(this.marca) &&
                     !this.tabDoJogo.haMarcaNaPosicao(i,2))
                     {
-                        this.tabDoJogo.setMarcaNaPosicao(this.marca, i,0);
+                        this.tabDoJogo.setMarcaNaPosicao(this.marca, i,2);
                         return;
                     }
                 else
@@ -252,7 +252,7 @@ public class JogadorAutomatico implements Jogador
                     !this.tabDoJogo.haMarcaNaPosicao(i,1) &&
                     this.tabDoJogo.haMarcaNaPosicao(i,2) && this.tabDoJogo.getMarcaNaPosicao(i,2).equals(this.marca))
                     {
-                        this.tabDoJogo.setMarcaNaPosicao(this.marca, i,1);
+                        this.tabDoJogo.setMarcaNaPosicao(this.marca, i,0);
                         return;
                     }
                 else
@@ -260,7 +260,7 @@ public class JogadorAutomatico implements Jogador
                     !this.tabDoJogo.haMarcaNaPosicao(i,1) &&
                     !this.tabDoJogo.haMarcaNaPosicao(i,2))
                     {
-                        this.tabDoJogo.setMarcaNaPosicao(this.marca, i,2);
+                        this.tabDoJogo.setMarcaNaPosicao(this.marca, i,1);
                         return;
                     }
             }
@@ -338,6 +338,10 @@ public class JogadorAutomatico implements Jogador
                     return;
                 }
             else
+            if(!this.tabDoJogo.haMarcaNaPosicao(1,1)){
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, 1,1);
+                    return;
+            }
             for(byte i=0; i<3; i++){
                 for(byte p=0; p<3; p++){
                     if(!this.tabDoJogo.haMarcaNaPosicao(i,p)) {

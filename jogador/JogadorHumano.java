@@ -21,11 +21,14 @@ public class JogadorHumano implements Jogador
         char letra = 'c';
         String entrada;
         try{
-            entrada = teclado.readLine();
-            if(entrada != null && !entrada.isEmpty()) {
-                letra = entrada.toUpperCase().charAt(0);
+            for(;;){
+                entrada = teclado.readLine().trim().toUpperCase();
+                if(entrada != null && !entrada.isEmpty() && (entrada.equals("X") || entrada.equals("O"))) {
+                    letra = entrada.toUpperCase().charAt(0);
+                    break;
+                }
+                else System.out.println("Marca inválida, tente novamente!");
             }
-            else System.out.println("Nenhuma letra digitada.");
         }
         catch(Exception e) {
             System.out.println("Erro na leitura"+e.getMessage());
@@ -54,51 +57,62 @@ public class JogadorHumano implements Jogador
     {
         if(this.jogadas==0) System.out.println("Digite primeiro a linha, de 0 a 2, e depois a coluna, de 0 a 2");
 
+        if(this.jogadas>0) System.out.println("Sua vez de Jogar!");
+
         int linha;
         int coluna;
 
-        for(;;){
-            System.out.println("Em qual linha deseja jogar ?");
-            try {
-                String entLinha = teclado.readLine();
-                if(entLinha!=null && !entLinha.isEmpty()) {
-                    linha = Integer.parseInt(entLinha.trim());
-                    if(linha>2 || linha<0){
-                        System.out.println("Valor digitado inválido, tente novamente!");
-                    }
-                    else break;
-                }
-                else {
-                    System.out.println("Nenhum valor digitado, tente novamente!");
-                }
-            }
-            catch(Exception e){
-                System.out.println("Erro na leitura, tente novamente!");
-            }
-        }
-
-        for(;;){
-            System.out.println("Em qual coluna deseja jogar ?");
-            try {
-                String entColuna = teclado.readLine();
-                if(entColuna!=null && !entColuna.isEmpty()) {
-                    coluna = Integer.parseInt(entColuna.trim());
-                    if(coluna>2 || coluna<0){
-                        System.out.println("Valor digitado inválido, tente novamente!");
-                    }
-                    else break;
-                }
-                else {
-                    System.out.println("Nenhum valor digitado, tente novamente!");
-                }
-            }
-            catch(Exception e){
-                System.out.println("Erro na leitura, tente novamente!"); 
-            }
-        }
-
         try{
-            this.tabDoJogo.setMarcaNaPosicao(this.marca, linha,coluna);
+            for(;;){
+
+                for(;;){
+                    System.out.println("Em qual linha deseja jogar ?");
+                    try {
+                        String entLinha = teclado.readLine();
+                        if(entLinha!=null && !entLinha.isEmpty()) {
+                            linha = Integer.parseInt(entLinha.trim());
+                            if(linha>2 || linha<0){
+                                System.out.println("Valor digitado inválido, tente novamente!");
+                            }
+                            else break;
+                        }
+                        else {
+                            System.out.println("Nenhum valor digitado, tente novamente!");
+                        }
+                    }
+                    catch(Exception e){
+                        System.out.println("Erro na leitura, tente novamente!");
+                    }
+                }
+
+                for(;;){
+                    System.out.println("Em qual coluna deseja jogar ?");
+                    try {
+                        String entColuna = teclado.readLine();
+                        if(entColuna!=null && !entColuna.isEmpty()) {
+                            coluna = Integer.parseInt(entColuna.trim());
+                            if(coluna>2 || coluna<0){
+                                System.out.println("Valor digitado inválido, tente novamente!");
+                            }
+                            else break;
+                        }
+                        else {
+                            System.out.println("Nenhum valor digitado, tente novamente!");
+                        }
+                    }
+                    catch(Exception e){
+                        System.out.println("Erro na leitura, tente novamente!"); 
+                    }
+                }
+
+                if(this.tabDoJogo.haMarcaNaPosicao(linha, coluna)){
+                    System.out.println("Há posição digitada já está ocupada, tente novamente!");
+                }
+                else {
+                    this.tabDoJogo.setMarcaNaPosicao(this.marca, linha,coluna);
+                    break;
+                }
+            }
         }
         catch(Exception e){}
         

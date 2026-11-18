@@ -13,7 +13,7 @@ public class Tabuleiro implements Cloneable
 
     public boolean haMarcaNaPosicao (int lin, int col) throws Exception
     {
-        if(lin<0 || lin<2 || col<0 || col>2) throw new Exception("Valor de linha ou coluna inválido!");
+        if(lin<0 || lin>2 || col<0 || col>2) throw new Exception("Valor de linha ou coluna inválido!");
         return this.matriz[lin][col]!=null;
         // verifico se em matriz[lin][col]
         // tem null, retornando false em caso
@@ -23,7 +23,7 @@ public class Tabuleiro implements Cloneable
 
     public Marca getMarcaNaPosicao (int lin, int col) throws Exception
     {
-        if(lin<0 || lin<2 || col<0 || col<2) throw new Exception("Valor de linha ou coluna inválido!");
+        if(lin<0 || lin>2 || col<0 || col>2) throw new Exception("Valor de linha ou coluna inválido!");
         return this.matriz[lin][col];
         // retornar a marca que tem em
         // matriz[lin][col]
@@ -32,7 +32,7 @@ public class Tabuleiro implements Cloneable
 
     public void setMarcaNaPosicao (Marca mrc, int lin, int col) throws Exception
     {
-        if(lin<0 || lin<2 || col<0 || col<2 || mrc==null) throw new Exception("Valor de linha, coluna ou marca inválido!");
+        if(lin<0 || lin>2 || col<0 || col>2 || mrc==null) throw new Exception("Valor de linha, coluna ou marca inválido!");
         this.matriz[lin][col]=mrc;
         // colocar mrc em matriz[lin][col],
         // dar excecao caso lin ou col invalido
@@ -42,11 +42,27 @@ public class Tabuleiro implements Cloneable
     @Override
     public String toString ()
     {
-        return (this.matriz[0][0] == null ? " " : this.matriz[0][0])+" | "+(this.matriz[0][1] == null ? " " : this.matriz[0][1])+" | "+(this.matriz[0][2] == null ? " " : this.matriz[0][2])+"\n"+
+        /*return (this.matriz[0][0] == null ? " " : this.matriz[0][0])+" | "+(this.matriz[0][1] == null ? " " : this.matriz[0][1])+" | "+(this.matriz[0][2] == null ? " " : this.matriz[0][2])+"\n"+
                "--+--+--"+
                (this.matriz[1][0] == null ? " " : this.matriz[1][0])+" | "+(this.matriz[1][1] == null ? " " : this.matriz[1][1])+" | "+(this.matriz[1][2] == null ? " " : this.matriz[1][2])+"\n"+
                "--+--+--"+
                (this.matriz[2][0] == null ? " " : this.matriz[2][0])+" | "+(this.matriz[2][1] == null ? " " : this.matriz[2][1])+" | "+(this.matriz[2][2] == null ? " " : this.matriz[2][2])+"\n";
+        */
+        String res="\n";
+        for(int i=0; i<3; i++){
+            for(int j= 0; j<3; j++){
+                if(matriz[i][j]!=null){
+                    res+=" "+matriz[i][j]+" "+ (j<2 ? "|": "\n");
+                }else{
+                    res+="   "+(j<2 ? "|": "\n");
+                }
+            }
+            if(i<2){
+                res+="---+---+---\n";
+            }
+        } 
+        return res;
+
         // retornar em um String o tabuleiro
         // formatado para ser exibido na tela
     }

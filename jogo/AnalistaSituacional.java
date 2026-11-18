@@ -113,7 +113,7 @@ public class AnalistaSituacional
         if(obj==this) return  true;
         if(obj.getClass()!=this.getClass()) return false;
         AnalistaSituacional a = (AnalistaSituacional)obj;
-        return a.tabDoJogo==this.tabDoJogo;
+        return a.tabDoJogo.equals(this.tabDoJogo);
     }
 
     @Override
